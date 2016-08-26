@@ -1,4 +1,4 @@
-## Start from my the miniscule alpine
+## Start from the miniscule alpine
 
 FROM alpine:latest
 
