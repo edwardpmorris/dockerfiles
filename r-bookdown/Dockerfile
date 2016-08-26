@@ -13,7 +13,7 @@ RUN mkdir -p /opt/pandoc \
   && unzip -j pandoc-1.13.1.zip "pandoc-1.13.1/linux/debian/x86_64/pandoc-citeproc" -d /opt/pandoc \
   && chmod +x "/opt/pandoc/pandoc-citeproc" \
   && ln -s "/opt/pandoc/pandoc-citeproc" /usr/local/bin \
-  && rm -f /tmp/pandoc-1.13.1.zip
+  && rm -f pandoc-1.13.1.zip
 
 ## Install bookdown and clean up
 
