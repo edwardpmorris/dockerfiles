@@ -6,7 +6,7 @@ MAINTAINER Conor I. Anderson <conor.anderson@mail.utoronto.ca>
 
 ## Add the ghc repo courtesy of mitchty/alpine-ghc
 
-COPY mitch.tishmack@gmail.com-55881c97.rsa.pub /etc/apk/keys/mitch.tishmack@gmail.com-55881c97.rsa.p$
+COPY mitch.tishmack@gmail.com-55881c97.rsa.pub /etc/apk/keys/mitch.tishmack@gmail.com-55881c97.rsa.pub
 RUN echo "https://s3-us-west-2.amazonaws.com/alpine-ghc/8.0" >> /etc/apk/repositories
 
 ## Install the Haskell platform and pandoc, and clean-up
