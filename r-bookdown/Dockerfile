@@ -15,14 +15,11 @@ RUN mkdir -p /opt/pandoc \
   && ln -s "/opt/pandoc/pandoc-citeproc" /usr/local/bin \
   && rm -f /tmp/pandoc-1.13.1.zip
 
-## Install bookdown
+## Install bookdown and clean up
 
-RUN apt-get update -qq && apt-get install -y --no-install-recommends libxml2-dev
-RUN R -q -e 'install.packages("bookdown", repo="https://cran.rstudio.com/")'
-
-## Clean-up
-
-RUN apt-get clean && rm -rf /tmp/* /var/lib/apt/lists/*
+RUN apt-get update -qq && apt-get install -y --no-install-recommends libxml2-dev && \
+    R -q -e 'install.packages("bookdown", repo="https://cran.rstudio.com/")' && \
+    apt-get clean && rm -rf /tmp/* /var/lib/apt/lists/*
 
 ## Finish
 CMD ["R"]

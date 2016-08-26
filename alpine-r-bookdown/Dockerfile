@@ -9,26 +9,16 @@ MAINTAINER Conor I. Anderson <conor.anderson@mail.utoronto.ca>
 RUN echo http://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
     echo http://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories
 
-## Install R and a few build tools
+## Install R and a few build tools, patch and install httpuv then install bookdown and clean-up
 
-RUN apk update && apk add --no-cache R R-dev curl openssl-dev curl-dev gcc g++ git coreutils libxml2-dev
-
-## Install httpuv because it seems to be needed quite often and needs to be patched
-
-RUN R -q -e "install.packages('Rcpp', repo='https://cran.rstudio.com')"
-RUN curl -L -O https://cran.r-project.org/src/contrib/httpuv_1.3.3.tar.gz \
+RUN apk update && apk add --no-cache R R-dev curl openssl-dev curl-dev gcc g++ git coreutils libxml2-dev && \
+    R -q -e "install.packages('Rcpp', repo='https://cran.rstudio.com')" && \
+    curl -L -O https://cran.r-project.org/src/contrib/httpuv_1.3.3.tar.gz \
 	&& tar xvf httpuv_1.3.3.tar.gz \
 	&& sed -i -e 's/__USE_MISC/_GNU_SOURCE/g' httpuv/src/libuv/src/fs-poll.c \
 	&& tar -cf httpuv_1.3.3.tar.gz httpuv \
-	&& R CMD INSTALL httpuv_1.3.3.tar.gz \
-	&& rm -r httpuv_1.3.3.tar.gz httpuv
-
-## Install bookdown
-
-RUN R -q -e 'install.packages("bookdown", repo="https://cran.rstudio.com/")'
-
-## Clean-up
-
-RUN rm -rf /tmp/*
+	&& R CMD INSTALL httpuv_1.3.3.tar.gz && \
+    R -q -e 'install.packages("bookdown", repo="https://cran.rstudio.com/")' && \
+    rm -rf httpuv_1.3.3.tar.gz httpuv /tmp/*
 
 CMD ["R"]
