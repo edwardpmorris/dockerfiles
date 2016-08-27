@@ -29,4 +29,4 @@ COPY ["pkg.sh", "/usr/local/sbin/"]
 
 ENTRYPOINT ["/usr/local/sbin/pkg.sh"]
 
-CMD ["--help"]
+CMD ["bash"]

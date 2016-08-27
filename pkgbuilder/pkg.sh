@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ $# -eq 0 ] || [ "$1" == '--help' ] || [ "$1" == '-h' ]; then
+if [ "$1" == '--help' ] || [ "$1" == '-h' ]; then
   echo "Navigate to the folder containing your makefile and execute:"
   echo "docker run --rm -v \"\$(pwd):/src\" conoia/pkgbuilder"
   exit 1
@@ -16,5 +16,4 @@ sudo -u maker makepkg -scf ---noprogressbar --noconfirm
 
 echo "Checking package with namcap"
 result=$(find *.pkg.tar.xz)
-if (result 
 namcap $result
