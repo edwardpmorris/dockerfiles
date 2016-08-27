@@ -21,5 +21,4 @@ RUN apt-get update -qq && apt-get install -y --no-install-recommends libxml2-dev
     R -q -e 'install.packages("bookdown", repo="https://cran.rstudio.com/")' && \
     apt-get clean && rm -rf /tmp/* /var/lib/apt/lists/*
 
-## Finish
 CMD ["R"]
