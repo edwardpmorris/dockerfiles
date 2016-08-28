@@ -1,5 +1,7 @@
 FROM base/archlinux
 
+MAINTAINER Conor I. Anderson <conor.anderson@mail.utoronto.ca>
+
 VOLUME /src
 
 WORKDIR /src
@@ -24,6 +26,17 @@ RUN pacman-key --populate && \
 RUN useradd -ms /bin/bash maker && chown -R maker:users /src && \
   sed -e '/nice/ s/^#*/#/' -i /etc/security/limits.conf && \
   echo "maker ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+RUN pacman -Syy --noprogressbar --noconfirm && \
+  git clone https://aur.archlinux.org/cower-git.git && \
+  cd cower-git && chown -R maker:users . && \
+  sudo -u maker makepkg -scf --noconfirm --install && \
+  cd .. && rm -rf ./cower-git && \
+  git clone https://aur.archlinux.org/pacaur.git && \
+  cd pacaur && chown -R maker:users . && \
+  sudo -u maker makepkg -scf --noconfirm --install && \
+  cd .. && rm -rf ./pacaur && \
+  rm -rf /var/cache/pacman/pkg/* /var/lib/pacman/sync/*
 
 COPY ["pkg.sh", "/usr/local/sbin/"]
 
