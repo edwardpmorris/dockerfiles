@@ -20,7 +20,7 @@ RUN pacman-key --populate && \
   pacman -S --noprogressbar --noconfirm archlinux-keyring && \
   yes | pacman -S --noprogressbar gcc-libs-multilib && \
   pacman -Su --noprogressbar --noconfirm && \
-  pacman -S --noprogressbar --noconfirm sudo fakeroot binutils namcap git && \
+  pacman -S --noprogressbar --noconfirm sudo fakeroot binutils namcap git gcc make && \
   rm -rf /var/cache/pacman/pkg/* /var/lib/pacman/sync/*
 
 RUN useradd -ms /bin/bash maker && chown -R maker:users /src && \
