@@ -1,6 +1,8 @@
-FROM base/archlinux
+FROM scratch
 
 MAINTAINER Conor I. Anderson <conor.anderson@mail.utoronto.ca>
+
+ADD archlinux.tar /
 
 VOLUME /src
 
@@ -13,14 +15,14 @@ RUN echo "[multilib]" >> /etc/pacman.conf && \
 
 RUN pacman-key --populate && \
   pacman-key --refresh-keys && \
-  pacman -Sy --noprogressbar --noconfirm && \
+  pacman -Syy --noprogressbar --noconfirm && \
   pacman -S --force openssl --noprogressbar --noconfirm && \
   pacman -S pacman --noprogressbar --noconfirm && \
   pacman-db-upgrade && \
   pacman -S --noprogressbar --noconfirm archlinux-keyring && \
   yes | pacman -S --noprogressbar gcc-libs-multilib && \
   pacman -Su --noprogressbar --noconfirm && \
-  pacman -S --noprogressbar --noconfirm sudo fakeroot binutils namcap git gcc make && \
+  pacman -S --noprogressbar --noconfirm sudo fakeroot binutils namcap git make gcc && \
   rm -rf /var/cache/pacman/pkg/* /var/lib/pacman/sync/*
 
 RUN useradd -ms /bin/bash maker && chown -R maker:users /src && \
