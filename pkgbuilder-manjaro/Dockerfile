@@ -2,7 +2,7 @@ FROM scratch
 
 MAINTAINER Conor I. Anderson <conor.anderson@mail.utoronto.ca>
 
-ADD manjarolinux.tar /
+ADD manjarolinux.tar.xz /
 
 VOLUME /src
 

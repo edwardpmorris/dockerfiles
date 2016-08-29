@@ -2,7 +2,7 @@ FROM scratch
 
 MAINTAINER Conor I. Anderson <conor.anderson@mail.utoronto.ca>
 
-ADD archlinux.tar /
+ADD archlinux.tar.xz /
 
 VOLUME /src
 

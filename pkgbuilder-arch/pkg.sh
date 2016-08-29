@@ -8,13 +8,16 @@ fi
 
 echo "Updating base"
 pacman -Sy --noprogressbar --noconfirm
-pacman -S --noprogressbar --noconfirm archlinux-keyring manjaro-keyring
+pacman -S --noprogressbar --noconfirm archlinux-keyring
 pacman -Su --noprogressbar --noconfirm
 
+echo "Cleaning up the package folder"
+rm -rf src pkg *.pkg.tar.xz
+
 echo "Installing packages and building package"
-deps=$(awk '/depends\=/{print}' PKGBUILD | sed 's/.*(//g' | sed 's/)//g' | sed "s/'//g")
-sudo -u maker pacaur -S --needed --noconfirm $deps
-sudo -u maker makepkg -cf --noconfirm
+deps=$(awk '/depends/{a=1} a; /)/{a=0}' PKGBUILD | sed "s/optdepends.*'[^']*'/ /" | sed 's/^[^=]*=(//' | sed 's/)//g' | sed "s/'//g")
+yes | sudo -u maker pacaur -S --needed $deps
+sudo -u maker makepkg --cleanbuild --clean --force
 
 echo "Checking package with namcap"
 result=$(find *.pkg.tar.xz)
