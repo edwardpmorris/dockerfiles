@@ -2,7 +2,7 @@ FROM scratch
 
 MAINTAINER Conor I. Anderson <conor.anderson@mail.utoronto.ca>
 
-ADD manjarolinux.tar.xz /
+ADD https://media.githubusercontent.com/media/ConorIA/dockerfiles/master/pkgbuilder-manjaro/manjarolinux.tar.xz /
 
 VOLUME /src
 
