@@ -2,7 +2,7 @@ FROM scratch
 
 MAINTAINER Conor I. Anderson <conor.anderson@mail.utoronto.ca>
 
-ADD archlinux.tar.xz /
+ADD https://media.githubusercontent.com/media/ConorIA/dockerfiles/master/pkgbuilder-arch/archlinux.tar.xz /
 
 VOLUME /src
 
