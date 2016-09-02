@@ -34,7 +34,7 @@ expect <<EOF
 		sleep .1
 		exp_send -s -- \$arg
 	}
-	set timeout 60
+	set timeout 120
 
 	spawn sudo -u maker pacaur -S --needed $deps
 	expect {
