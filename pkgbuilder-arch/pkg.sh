@@ -12,7 +12,6 @@ pacman -S --noprogressbar --noconfirm archlinux-keyring
 pacman -Su --noprogressbar --noconfirm
 
 echo "Cleaning up the package folder"
-
 rm -rf src pkg *.pkg.tar.xz
 
 echo "Installing dependencies and building package"
@@ -26,9 +25,26 @@ case ${answer:0:1} in
 	promptresp="y"
     ;;
 esac
-deps=$(awk '/depends/{a=1} a; /)/{a=0}' PKGBUILD | sed "s/optdepends.*'[^']*'/ /" | sed 's/^[^=]*=(//' | sed 's/)//g' | sed "s/'//g")
+deps=$(awk '/depends/{a=1} a; /)/{a=0}' PKGBUILD | sed "s/optdepends.*'[^']*'/ /" | sed 's/^[^=]*=(//' | sed 's/)//g' | sed "s/'//g" | tr '\n' ' ')
+
 if [ "$promptresp" = "y" ]; then
-  yes | sudo -u maker pacaur -S --needed $deps
+expect <<EOF
+	set send_slow {1 .1}
+	proc send {ignore arg} {
+		sleep .1
+		exp_send -s -- \$arg
+	}
+	set timeout 60
+
+	spawn sudo -u maker pacaur -S --needed $deps
+	expect {
+		-exact " are in conflict. Remove " { send -- "y\r"; exp_continue }
+                -exact "Enter a number " { send -- "\r"; exp_continue }
+		-exact "Enter a selection " { send -- "\r"; exp_continue }
+		-exact "installation? \[Y/n\]" { send -- "y\r"; exp_continue }
+	}
+EOF
+
 else
   sudo -u maker pacaur -S --needed $deps
 fi
