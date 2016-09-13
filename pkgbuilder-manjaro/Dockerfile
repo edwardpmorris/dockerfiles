@@ -13,6 +13,7 @@ RUN mkdir -p /root/.gnupg && \
   dirmngr < /dev/null && \
   pacman-key --populate archlinux manjaro && \
   pacman-key --refresh-keys && \
+  pacman-mirrors -g && \
   pacman -Syy --noprogressbar --noconfirm && \
   pacman -S --noprogressbar --noconfirm archlinux-keyring manjaro-keyring && \
   pacman -Su --noprogressbar --noconfirm && \

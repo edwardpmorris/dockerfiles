@@ -14,7 +14,10 @@ docker rmi manjaro
 docker build -t conoria/pkgbuilder:manjaro .
 docker rmi $(docker images -q --filter "dangling=true")
 docker push conoria/pkgbuilder:manjaro
+sed -i '$d' README.md
+date +%D >> README.md
 cd ..
+git add pkgbuilder-manjaro/README.md
 git add pkgbuilder-manjaro/manjarolinux.tar.xz
 git commit -m "Auto-update pkgbuilder:manjaro"
 git push

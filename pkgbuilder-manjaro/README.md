@@ -5,3 +5,6 @@ This image provides a clean base Manjaro image used to test makepkg. The base im
 ## Usage
 Navigate to the folder containing your makefile and execute:
 `docker run --rm -v "$(pwd):/src" conoria/pkgbuilder:manjaro`
+
+## Base image date
+09/12/16
