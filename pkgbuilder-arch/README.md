@@ -5,3 +5,6 @@ This image provides a clean base Arch image used to test makepkg. The tool itsel
 ## Usage
 Navigate to the folder containing your makefile and execute:
 `docker run --rm -v "$(pwd):/src" conoria/pkgbuilder:arch`
+
+## Base image date
+NIL

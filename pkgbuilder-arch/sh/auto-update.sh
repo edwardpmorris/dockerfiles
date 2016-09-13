@@ -14,8 +14,11 @@ docker rmi archlinux
 docker build -t conoria/pkgbuilder:arch .
 docker rmi $(docker images -q --filter "dangling=true")
 docker push conoria/pkgbuilder:arch
+sed -i '$d' README.md
+date +%D >> README.md
 cd ..
-git add pkgbuilder-manjaro/archlinux.tar.xz
+git add pkgbuilder-arch/README.md
+git add pkgbuilder-arch/archlinux.tar.xz
 git commit -m "Auto-update pkgbuilder:arch"
 git push
 echo "Full auto-update process complete"
