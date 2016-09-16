@@ -7,4 +7,4 @@ Navigate to the folder containing your makefile and execute:
 `docker run --rm -v "$(pwd):/src" conoria/pkgbuilder:manjaro`
 
 ## Base image date
-09/12/16
+09/16/16
