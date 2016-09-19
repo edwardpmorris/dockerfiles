@@ -4,7 +4,7 @@ FROM alpine:edge
 
 MAINTAINER Conor I. Anderson <conor.anderson@mail.utoronto.ca>
 
-RUN apk update && apk add --no-cache R R-dev curl openssl-dev curl-dev gcc g++ git coreutils && \
+RUN apk update && apk add --no-cache R R-dev curl openssl-dev curl-dev libxml2-dev gcc g++ git coreutils && \
     R -q -e "install.packages('Rcpp', repo='https://cran.rstudio.com')" && \
     curl -L -O https://cran.r-project.org/src/contrib/httpuv_1.3.3.tar.gz \
 	&& tar xvf httpuv_1.3.3.tar.gz \
