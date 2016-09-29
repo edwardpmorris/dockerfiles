@@ -1,1 +1,2 @@
 pkgbuilder-manjaro/manjarolinux.tar.xz filter=lfs diff=lfs merge=lfs -text
+manjaro-base/manjarolinux.tar.xz filter=lfs diff=lfs merge=lfs -text
