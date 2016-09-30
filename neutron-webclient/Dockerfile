@@ -15,6 +15,8 @@ RUN  git config --global user.email "mail@example.com" && \
      go get -u github.com/emersion/neutron && \
      chown -R maker:users /opt/go
 
+RUN  apk add --no-cache expect
+
 USER maker
 
 WORKDIR $GOPATH/src/github.com/emersion/neutron
@@ -22,8 +24,11 @@ WORKDIR $GOPATH/src/github.com/emersion/neutron
 RUN  git config --global user.email "mail@example.com" && \
      git config --global user.name "Done, Gitter" && \
      git submodule init  && \
-     git submodule update  && \
-     yes 8 | make build-client
+     git submodule update
+
+COPY expect.sh $GOPATH/src/github.com/emersion/neutron/expect.sh
+
+RUN  expect ./expect.sh
 
 RUN  sed -i 's/https:\/\/github.com\/ProtonMail\/WebClient.git/https:\/\/github.com\/vpapadopou\/Neutron-WebClient.git/g' .gitmodules  && \
      git submodule sync  && \
@@ -52,3 +57,4 @@ RUN  cd $GOPATH/src/github.com/emersion/neutron && \
 EXPOSE  4000
 
 CMD  '/usr/bin/neutron'
+
