@@ -10,7 +10,7 @@ A clean(ish) Alpine-based image used to run [Neutron](https://github.com/emersio
 ```
 docker run -it --name neutron alpine:edge sh
 ```
-Inside the container:
+### Inside the container:
 ```
 apk update && apk add --no-cache sudo go nodejs python git make g++
 adduser maker -D
@@ -20,9 +20,9 @@ git config --global user.email "mail@example.com"
 git config --global user.name "Done, Gitter" 
 go get -u github.com/emersion/neutron
 chown -R maker:users /opt/go
-```
-Execute the following as user `maker`
-```
+## ---------------------------------------
+# We execute the following as user `maker`
+## ---------------------------------------
 sudo -u maker sh
 export GOPATH=/opt/go
 cd $GOPATH/src/github.com/emersion/neutron
@@ -42,9 +42,9 @@ git pull origin public
 cd ..
 make build-client
 exit
-```
-We are root again.
-```
+## ---------------------------------------
+# We are root again.
+## ---------------------------------------
 echo "cd $GOPATH/src/github.com/emersion/neutron/ && go run neutron.go ." > /usr/bin/neutron
 chmod +x /usr/bin/neutron
 mkdir -p /config
@@ -53,14 +53,17 @@ mv $GOPATH/src/github.com/emersion/neutron/config.json /config
 ln -s /config/db $GOPATH/src/github.com/emersion/neutron/
 ln -s /config/config.json $GOPATH/src/github.com/emersion/neutron/
 rm -rf /tmp/*
+## ---------------------------------------
+# Leave the container running for now.
+## ---------------------------------------
 ```
-Then
+### Then, back on your host machine:
 ```
 docker commit neutron conoria/neutron
 docker stop neutron
 docker rm neutron
 ```
-Use the following Dockerfile:
+### Use the following Dockerfile:
 ```
 FROM conoria/neutron
 
@@ -74,15 +77,13 @@ EXPOSE  4000
 
 CMD  '/usr/bin/neutron'
 ```
-Command:
+### Build the final image:
 ```
 docker build -t conoria/neutron-webclient .
 ```
 
 ## Usage
-
-Use `docker-compose.yml` or:
-
+Use the `docker-compose.yml` included in this repo or run:
 ```
 docker run -v $PWD/config:/config -p 4000:4000 conoria/neutron-webclient
 
