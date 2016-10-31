@@ -91,5 +91,5 @@ RUN chmod o+x /etc/s6/inbox-start/run && chmod o+x /etc/s6/inbox-api/run &&\
 WORKDIR /opt/sync-engine/
 VOLUME /var/lib/inboxapp
 EXPOSE 5555
-ENTRYPOINT [ s6-svscan -t 0 /etc/s6 ]
+ENTRYPOINT [ "s6-svscan", "-t", "0", "/etc/s6" ]
 CMD [ s6-svscan -t 0 /etc/s6 ]
