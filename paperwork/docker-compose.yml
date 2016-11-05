@@ -1,5 +1,5 @@
 paperwork:
-  image: paperwork2
+  image: conoria/paperwork
   links:
     - paperwork-db:paperwork-db
   command: /app/docker-runner.sh

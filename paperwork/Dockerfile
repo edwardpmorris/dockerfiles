@@ -3,7 +3,8 @@ FROM alpine:edge
 MAINTAINER Conor Anderson <conor@conr.ca>
 
 RUN apk add --update --no-cache \
-	curl \
+	bash \
+    curl \
 	git \
 	lighttpd \
 	nodejs \
@@ -50,7 +51,7 @@ COPY lighttpd.conf /etc/lighttpd/
 
 VOLUME ["/app/app/storage/"]
 
-RUN apk add bash && echo "lighttpd -f /etc/lighttpd/lighttpd.conf -D" >> /run.sh &&\
+RUN echo "lighttpd -f /etc/lighttpd/lighttpd.conf -D" >> /run.sh &&\
     chmod +x /run.sh
 
 CMD ["/app/docker-runner.sh"]
