@@ -4,7 +4,7 @@ MAINTAINER Conor Anderson <conor@conr.ca>
 
 RUN apk add --update --no-cache \
 	bash \
-    curl \
+        curl \
 	git \
 	lighttpd \
 	nodejs \
@@ -26,13 +26,14 @@ RUN git clone --depth 1 https://github.com/twostairs/paperwork.git &&\
     mv paperwork/frontend /app &&\
     rm -rf paperwork
 
-RUN curl -sSL https://getcomposer.org/installer | php
+RUN curl -sSL https://getcomposer.org/installer | php &&\
+    mv composer.phar /usr/local/bin/composer
 
 WORKDIR /app
 
 RUN find ./app/storage -type d -print0 | xargs -0 chmod 0755 &&\
     find ./app/storage -type f -print0 | xargs -0 chmod 0644 &&\
-    ../composer.phar install --prefer-source --no-interaction &&\
+    composer install --prefer-source --no-interaction &&\
     npm update &&\
     npm install &&\
     npm install -g gulp bower &&\
@@ -51,7 +52,7 @@ COPY lighttpd.conf /etc/lighttpd/
 
 VOLUME ["/app/app/storage/"]
 
-RUN echo "lighttpd -f /etc/lighttpd/lighttpd.conf -D" >> /run.sh &&\
+RUN echo "lighttpd -f /etc/lighttpd/lighttpd.conf -D" > /run.sh &&\
     chmod +x /run.sh
 
 CMD ["/app/docker-runner.sh"]
