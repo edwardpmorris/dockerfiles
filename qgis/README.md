@@ -7,11 +7,14 @@ Inspired from [kartoza/docker-qgis-desktop](https://github.com/kartoza/docker-qg
 If you user is in the docker group, run the commands below. If not, run as root and specify which user's home volume you want to use e.g. `-v /home/maker:/home/maker`.
 
 ```
-xhost +
+XSOCK=/tmp/.X11-unix
+XAUTH=/tmp/.docker.xauth
+xauth nlist :0 | sed -e 's/^..../ffff/' | xauth -f $XAUTH nmerge -
 docker run --rm -it \
-	-v ${HOME}:/home/${USER} \
-	-v /tmp/.X11-unix:/tmp/.X11-unix \
-	-e DISPLAY=unix$DISPLAY \
-	conoria/qgis
-xhost -
+  -v /home/conor:/home/conor \
+  -v $XSOCK:$XSOCK \
+  -v $XAUTH:$XAUTH \
+  -e XAUTHORITY=$XAUTH \
+  -e DISPLAY=unix$DISPLAY \
+  conoria/qgis
 ```
